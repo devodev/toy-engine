@@ -1,9 +1,5 @@
-#![allow(unused)]
-
-use std::{
-    borrow::Cow,
-    time::{Duration, Instant},
-};
+use std::borrow::Cow;
+use std::time::{Duration, Instant};
 
 use log::{debug, error, info, trace, warn};
 
@@ -25,6 +21,7 @@ impl<'a> Default for Timing<'a> {
     }
 }
 
+#[allow(unused)]
 impl<'a> Timing<'a> {
     pub fn new<N>(msg: N) -> Self
     where

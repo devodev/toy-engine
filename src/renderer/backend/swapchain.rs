@@ -1,10 +1,8 @@
-use std::{error::Error, result};
-
-use ash::{extensions::khr, vk};
+use ash::extensions::khr;
+use ash::vk;
 
 use super::device::Device;
-
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use crate::Result;
 
 pub(crate) struct Swapchain {
     /// A swapchain object (a.k.a. swapchain) provides the ability to present

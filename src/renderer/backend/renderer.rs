@@ -1,13 +1,12 @@
-use std::{error::Error, result};
-
 use ash::vk;
 use log::debug;
 use winit::window::Window;
 
-use super::{device::Device, image::Image, swapchain::Swapchain};
+use super::device::Device;
+use super::image::Image;
+use super::swapchain::Swapchain;
 use crate::renderer::backend::renderpass::RenderPass;
-
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use crate::Result;
 
 /// Number of frames in flight at any moment. This is used to isolate rendering
 /// logic related to each frame. It includes command buffers and semaphores.
@@ -151,7 +150,7 @@ impl VulkanRenderer {
             .map_err(|e| format!("create swapchain: {:?}", e))?;
 
         // create renderpass
-        let renderpass = RenderPass::new(&device, swapchain.image_format(), window_extent.into())
+        let renderpass = RenderPass::new(&device, swapchain.image_format())
             .map_err(|e| format!("create renderpass: {:?}", e))?;
 
         // create depth image
@@ -350,12 +349,8 @@ impl VulkanRenderer {
             .map_err(|e| format!("recreate swapchain: {:?}", e))?;
 
         // create renderpass
-        let renderpass = RenderPass::new(
-            &self.device,
-            swapchain.image_format(),
-            self.window_extent.into(),
-        )
-        .map_err(|e| format!("create renderpass: {:?}", e))?;
+        let renderpass = RenderPass::new(&self.device, swapchain.image_format())
+            .map_err(|e| format!("create renderpass: {:?}", e))?;
 
         // create depth image
         let depth_image = create_depth_image(&self.device, self.window_extent.into())

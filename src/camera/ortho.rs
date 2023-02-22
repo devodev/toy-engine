@@ -1,5 +1,3 @@
-#![allow(unused)]
-
 use cgmath::{Matrix4, SquareMatrix};
 
 use super::Camera;
@@ -22,6 +20,7 @@ pub struct CameraOrthographic {
 // defined by a 6-tuple, (left, right, bottom, top, near, far), which defines
 // the clipping planes. These planes form a box with the minimum corner at
 // (left, bottom, -near) and the maximum corner at (right, top, -far).
+#[allow(unused)]
 impl CameraOrthographic {
     pub fn new(width: u32, height: u32) -> Self {
         let mut camera = Self { ..Self::default() };

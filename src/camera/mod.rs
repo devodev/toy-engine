@@ -3,10 +3,9 @@ mod ortho;
 mod perspective;
 
 use cgmath::Matrix4;
-
-pub use self::controller::CameraController;
-pub use self::ortho::CameraOrthographic;
-pub use self::perspective::CameraPerspective;
+pub use controller::CameraController;
+pub use ortho::CameraOrthographic;
+pub use perspective::CameraPerspective;
 
 pub trait Camera {
     fn projection_matrix(&self) -> Matrix4<f32>;

@@ -1,14 +1,15 @@
-use std::{borrow::Cow, error::Error, ffi::CStr, ops::Deref, os::raw::c_char, result};
+use std::borrow::Cow;
+use std::ffi::CStr;
+use std::ops::Deref;
+use std::os::raw::c_char;
 
-use ash::{
-    extensions::{ext, khr},
-    vk::{self, DebugUtilsMessageSeverityFlagsEXT, DebugUtilsMessengerEXT},
-    Entry,
-};
+use ash::extensions::{ext, khr};
+use ash::vk::{self, DebugUtilsMessageSeverityFlagsEXT, DebugUtilsMessengerEXT};
+use ash::Entry;
 use log::{debug, error, info, warn};
 use winit::window::Window;
 
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use crate::Result;
 
 #[derive(Debug, Default)]
 pub(crate) struct SwapChainSupportDetails {

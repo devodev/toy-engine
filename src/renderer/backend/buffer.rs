@@ -1,10 +1,9 @@
-use std::{error::Error, mem::align_of, ops::Deref, result};
+use std::{mem::align_of, ops::Deref};
 
 use ash::{util::Align, vk};
 
 use super::find_memorytype_index;
-
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use crate::Result;
 
 #[derive(Clone, Copy, Debug)]
 pub(crate) struct Buffer {

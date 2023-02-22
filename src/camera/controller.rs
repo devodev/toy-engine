@@ -1,18 +1,10 @@
-#![allow(unused)]
-
-use std::{
-    ops::{Add, Mul, Sub},
-    time,
-};
+use std::ops::{Add, Mul, Sub};
+use std::time;
 
 use cgmath::{EuclideanSpace, InnerSpace, Matrix4, Point3, SquareMatrix, Vector3};
-use log::info;
-use winit::{
-    dpi::PhysicalSize,
-    event::{Event, VirtualKeyCode, WindowEvent},
-};
+use winit::event::{Event, VirtualKeyCode, WindowEvent};
 
-use super::{ortho::CameraOrthographic, Camera};
+use super::Camera;
 use crate::input::InputSystem;
 
 const HORIZONTAL_VEC: Vector3<f32> = Vector3::new(1.0, 0.0, 0.0);
@@ -36,6 +28,7 @@ pub struct CameraController<T: Camera> {
     zoom_speed: f32,
 }
 
+#[allow(unused)]
 impl<T> CameraController<T>
 where
     T: Camera,

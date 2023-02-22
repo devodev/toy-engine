@@ -1,8 +1,10 @@
-use std::{error::Error, io, ops::Deref, result};
+use std::io;
+use std::ops::Deref;
 
-use ash::{util::read_spv, vk};
+use ash::util::read_spv;
+use ash::vk;
 
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use crate::Result;
 
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd)]
 pub(crate) struct Shader {

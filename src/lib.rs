@@ -9,5 +9,9 @@ mod renderer;
 pub mod engine;
 pub mod object;
 
+use std::{error, result};
+
 // used in benches
 pub use renderer::QuadBatcher;
+
+type Result<T> = result::Result<T, Box<dyn error::Error>>;

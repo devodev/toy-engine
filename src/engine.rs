@@ -1,22 +1,18 @@
-use std::{error::Error, result, time};
+use std::time;
 
 use log::{debug, error};
-use winit::{
-    dpi::PhysicalSize,
-    event::{Event, WindowEvent},
-    event_loop::{ControlFlow, EventLoop},
-    window::WindowBuilder,
-};
+use winit::dpi::PhysicalSize;
+use winit::event::{Event, WindowEvent};
+use winit::event_loop::{ControlFlow, EventLoop};
+use winit::window::WindowBuilder;
 
-use crate::{
-    camera::{CameraController, CameraOrthographic},
-    frame_counter::{ExponentialMovingAverage, FPSPrinter, FrameCounter},
-    input::InputSystem,
-    object::GameObject,
-    renderer::{backend::renderer::VulkanRenderer, frontend, Renderer2DSystem},
-};
-
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use crate::camera::{CameraController, CameraOrthographic};
+use crate::frame_counter::{ExponentialMovingAverage, FPSPrinter, FrameCounter};
+use crate::input::InputSystem;
+use crate::object::GameObject;
+use crate::renderer::backend::renderer::VulkanRenderer;
+use crate::renderer::{frontend, Renderer2DSystem};
+use crate::Result;
 
 #[derive(Default)]
 pub struct EngineBuilder {

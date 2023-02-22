@@ -1,10 +1,9 @@
-use std::{error::Error, ops::Deref, result};
+use std::ops::Deref;
 
 use ash::vk;
 
 use super::image::Image;
-
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use crate::Result;
 
 #[derive(Clone, Copy, Debug)]
 pub(crate) struct Sampler {

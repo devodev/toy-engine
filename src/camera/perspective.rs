@@ -1,5 +1,3 @@
-#![allow(unused)]
-
 use cgmath::{Deg, Matrix4, SquareMatrix};
 
 #[derive(Debug, Copy, Clone)]
@@ -15,6 +13,7 @@ pub struct CameraPerspective {
     proj: Matrix4<f32>,
 }
 
+#[allow(unused)]
 impl CameraPerspective {
     pub fn new(width: usize, height: usize) -> Self {
         let mut camera = Self { ..Self::default() };

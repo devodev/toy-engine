@@ -2,29 +2,27 @@
 ///! https://github.com/Yatekii/imgui-wgpu-rs/blob/master/src/lib.rs
 ///! https://github.com/unknownue/vulkan-tutorial-rust/blob/master/src/tutorials/23_texture_image.rs
 ///! https://github.com/adrien-ben/imgui-rs-vulkan-renderer/blob/master/src/renderer/vulkan.rs
-use std::{error::Error, io::Cursor, mem, ops::Deref, result};
+use std::io::Cursor;
+use std::mem;
+use std::ops::Deref;
 
 use ash::vk;
 use cgmath::{Matrix4, SquareMatrix};
-use imgui::{DrawCmd::Elements, DrawData, DrawIdx, DrawList, DrawVert, FontConfig};
+use imgui::DrawCmd::Elements;
+use imgui::{DrawData, DrawIdx, DrawList, DrawVert, FontConfig};
 use log::debug;
 use winit::window::Window;
 
-use crate::{
-    offset_of,
-    renderer::backend::{
-        buffer::Buffer,
-        descriptor::{DescriptorPool, DescriptorSet, DescriptorSetLayout},
-        device::Device,
-        image::Image,
-        pipeline::Pipeline,
-        renderpass::RenderPass,
-        shader::Shader,
-        texture::Texture,
-    },
-};
-
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use crate::offset_of;
+use crate::renderer::backend::buffer::Buffer;
+use crate::renderer::backend::descriptor::{DescriptorPool, DescriptorSet, DescriptorSetLayout};
+use crate::renderer::backend::device::Device;
+use crate::renderer::backend::image::Image;
+use crate::renderer::backend::pipeline::Pipeline;
+use crate::renderer::backend::renderpass::RenderPass;
+use crate::renderer::backend::shader::Shader;
+use crate::renderer::backend::texture::Texture;
+use crate::Result;
 
 pub(crate) fn init(window: &Window) -> (imgui_winit_support::WinitPlatform, imgui::Context) {
     let mut imgui_context = imgui::Context::create();

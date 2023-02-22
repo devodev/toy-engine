@@ -1,10 +1,10 @@
-use std::{error::Error, ffi::CStr, ops::Deref, result};
+use std::ffi::CStr;
+use std::ops::Deref;
 
 use ash::vk;
 
 use super::{descriptor::DescriptorSetLayout, shader::Shader};
-
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use crate::Result;
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]

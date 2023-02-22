@@ -1,10 +1,10 @@
-use std::{error::Error, ops::Deref, result};
+use std::ops::Deref;
 
 use ash::vk;
 
-use super::{buffer::Buffer, texture::Texture};
-
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use super::buffer::Buffer;
+use super::texture::Texture;
+use crate::Result;
 
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd)]
 pub(crate) struct DescriptorPool {

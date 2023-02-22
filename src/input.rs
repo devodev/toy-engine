@@ -1,13 +1,7 @@
-#![allow(unused)]
-
 use std::collections::HashMap;
 
-use winit::{
-    dpi::PhysicalPosition,
-    event::{
-        DeviceEvent, ElementState, Event, KeyboardInput, MouseScrollDelta, VirtualKeyCode,
-        WindowEvent,
-    },
+use winit::event::{
+    DeviceEvent, ElementState, Event, KeyboardInput, MouseScrollDelta, VirtualKeyCode, WindowEvent,
 };
 
 #[derive(Default, Debug)]
@@ -99,6 +93,8 @@ impl InputSystem {
             None => false,
         }
     }
+
+    #[allow(unused)]
     pub fn is_key_released(&self, key: VirtualKeyCode) -> bool {
         match self.keyboard.get(&key) {
             Some(state) => state == &ElementState::Released,
@@ -106,9 +102,11 @@ impl InputSystem {
         }
     }
 
+    #[allow(unused)]
     pub fn mouse_scoll_x(&self) -> f32 {
         self.scroll_state.x
     }
+
     pub fn mouse_scoll_y(&self) -> f32 {
         self.scroll_state.y
     }

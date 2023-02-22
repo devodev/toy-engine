@@ -1,11 +1,9 @@
-#![allow(unused)]
-use std::{error::Error, ops::Deref, result};
+use std::ops::Deref;
 
 use ash::vk;
 
-use super::{device::Device, image::Image};
-
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use super::device::Device;
+use crate::Result;
 
 pub(crate) struct RenderPass {
     handle: vk::RenderPass,
@@ -14,11 +12,7 @@ pub(crate) struct RenderPass {
 }
 
 impl RenderPass {
-    pub(crate) unsafe fn new(
-        device: &Device,
-        image_format: &vk::Format,
-        extent: vk::Extent3D,
-    ) -> Result<Self> {
+    pub(crate) unsafe fn new(device: &Device, image_format: &vk::Format) -> Result<Self> {
         let renderpass = create_renderpass(device, image_format)
             .map_err(|e| format!("create renderpass: {:?}", e))?;
 

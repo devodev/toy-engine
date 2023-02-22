@@ -1,20 +1,14 @@
-use std::{
-    error::Error,
-    mem::{self, align_of},
-    ops::Deref,
-    result,
-};
+use std::mem::{self, align_of};
+use std::ops::Deref;
 
-use ash::{util::Align, vk};
+use ash::util::Align;
+use ash::vk;
 
-use super::{
-    buffer::Buffer,
-    device::Device,
-    find_memorytype_index,
-    renderer::{copy_buffer_to_image, transition_image_layout},
-};
-
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use super::buffer::Buffer;
+use super::device::Device;
+use super::find_memorytype_index;
+use super::renderer::{copy_buffer_to_image, transition_image_layout};
+use crate::Result;
 
 #[derive(Clone, Copy, Debug)]
 pub(crate) struct Image {

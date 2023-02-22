@@ -1,24 +1,19 @@
-use std::{error::Error, io::Cursor, mem, result, time};
+use std::{io::Cursor, mem, time};
 
 use ash::vk;
 use cgmath::{Matrix4, SquareMatrix, Vector3, Vector4};
 use log::debug;
 
-use crate::{
-    object::GameObject,
-    offset_of,
-    renderer::backend::{
-        buffer::Buffer,
-        descriptor::{DescriptorPool, DescriptorSet, DescriptorSetLayout},
-        device::Device,
-        pipeline::Pipeline,
-        renderpass::RenderPass,
-        shader::Shader,
-    },
-    TIME,
-};
-
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use crate::object::GameObject;
+use crate::offset_of;
+use crate::renderer::backend::buffer::Buffer;
+use crate::renderer::backend::descriptor::{DescriptorPool, DescriptorSet, DescriptorSetLayout};
+use crate::renderer::backend::device::Device;
+use crate::renderer::backend::pipeline::Pipeline;
+use crate::renderer::backend::renderpass::RenderPass;
+use crate::renderer::backend::shader::Shader;
+use crate::Result;
+use crate::TIME;
 
 const DEFAULT_MAX_QUADS: u32 = 2000;
 

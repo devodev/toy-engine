@@ -1,7 +1,7 @@
 # Toy Engine
 
 <p align="center">
-  <a href="https://github.com/devodev/vulkan-engine">
+  <a href="https://github.com/devodev/toy-engine">
     <img alt="sandbox1" src="assets/sandbox.png" width="800">
   </a>
 </p>

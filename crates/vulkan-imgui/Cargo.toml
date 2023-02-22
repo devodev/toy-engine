@@ -1,0 +1,28 @@
+[package]
+name = "vulkan-imgui"
+version = "0.0.0"
+description = "TBD"
+
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[lib]
+doctest = false
+
+[dependencies]
+ash.workspace = true
+ash-window.workspace = true
+cgmath.workspace = true
+image.workspace = true
+imgui = "0.10.0"
+imgui-winit-support = "0.10.0"
+log.workspace = true
+winit.workspace = true
+
+# local deps
+vulkan-renderer.workspace = true
+
+[build-dependencies]
+shaderc = "0.8.2"

@@ -1,0 +1,33 @@
+[package]
+name = "vulkan-renderer-2d"
+version = "0.0.0"
+description = "TBD"
+
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[lib]
+doctest = false
+
+[dependencies]
+ash.workspace = true
+ash-window.workspace = true
+cgmath.workspace = true
+image.workspace = true
+log.workspace = true
+
+# local deps
+core.workspace = true
+vulkan-renderer.workspace = true
+
+[dev-dependencies]
+criterion = { version = "0.4.0", features = ["html_reports"] }
+
+[build-dependencies]
+shaderc = "0.8.2"
+
+[[bench]]
+name = "quad_batcher"
+harness = false

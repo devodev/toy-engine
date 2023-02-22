@@ -1,0 +1,31 @@
+[package]
+name = "engine"
+version = "0.0.0"
+description = "TBD"
+
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[lib]
+doctest = false
+
+[dependencies]
+ash.workspace = true
+ash-window.workspace = true
+cgmath.workspace = true
+image.workspace = true
+log.workspace = true
+winit.workspace = true
+
+# local deps
+camera.workspace = true
+core.workspace = true
+input.workspace = true
+vulkan-imgui.workspace = true
+vulkan-renderer.workspace = true
+vulkan-renderer-2d.workspace = true
+
+[build-dependencies]
+shaderc = "0.8.2"

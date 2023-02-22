@@ -1,13 +1,12 @@
 use cgmath::{Vector3, Vector4};
 use log::LevelFilter;
 use toy_engine::{
-    engine::{Application, EngineBuilder},
+    engine::{Application, ApplicationContext, EngineBuilder},
     object::GameObject,
 };
 use winit::{dpi::LogicalSize, window::WindowBuilder};
 
-const WINDOW_TITLE: &str = "Vulkan Renderer";
-
+const WINDOW_TITLE: &str = "Sandbox";
 const WINDOW_WIDTH: u32 = 800;
 const WINDOW_HEIGHT: u32 = 600;
 
@@ -18,21 +17,25 @@ fn main() {
         .parse_default_env()
         .init();
 
+    // setup window
     let window_builder = {
         let logical_window_size: LogicalSize<u32> = (WINDOW_WIDTH, WINDOW_HEIGHT).into();
-
         WindowBuilder::new()
             .with_title(WINDOW_TITLE)
             .with_inner_size(logical_window_size)
             .with_resizable(true)
     };
 
+    // setup sandbox impl
     let application = Sandbox::default();
+
+    // setup engine
     let mut engine = EngineBuilder::new(Box::new(application))
         .with_window_builder(Some(window_builder))
         .build()
         .expect("engine builder builds");
 
+    // start engine
     engine.run()
 }
 
@@ -40,7 +43,7 @@ fn main() {
 struct Sandbox {}
 
 impl Application for Sandbox {
-    fn on_init(&mut self, mut ctx: toy_engine::engine::ApplicationContext) {
+    fn on_init(&mut self, mut ctx: ApplicationContext) {
         let count = 50;
         for x in 0..count + 1 {
             for y in 0..count + 1 {
@@ -62,6 +65,4 @@ impl Application for Sandbox {
             }
         }
     }
-
-    fn on_update(&mut self, _: toy_engine::engine::ApplicationContext) {}
 }

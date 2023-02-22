@@ -263,6 +263,6 @@ impl<'a> ApplicationContext<'a> {
 }
 
 pub trait Application {
-    fn on_init(&mut self, ctx: ApplicationContext);
-    fn on_update(&mut self, ctx: ApplicationContext);
+    fn on_init(&mut self, _ctx: ApplicationContext) {}
+    fn on_update(&mut self, _ctx: ApplicationContext) {}
 }

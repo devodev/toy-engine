@@ -3,6 +3,9 @@
     "markdown.extension.toc.omittedFromToc": {
         "README.md": ["## Table of contents"]
     },
+    "markdownlint.config": {
+        "MD033": false
+    },
     "rust-analyzer.check.command": "clippy",
     "[rust]": {
         "editor.formatOnSave": true

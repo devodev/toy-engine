@@ -11,7 +11,6 @@
 - [Overview](#overview)
 - [Dependencies](#dependencies)
   - [Setup using MSVC on Windows](#setup-using-msvc-on-windows)
-  - [Vulkan SDK](#vulkan-sdk)
 - [Development](#development)
   - [Debug Graphics](#debug-graphics)
 - [Benchmarks](#benchmarks)
@@ -37,12 +36,7 @@ We will be using [Rust](https://www.rust-lang.org/) as the programming language 
 2. Set the default Rust toolchain to msvc: `rustup default nightly-x86_64-pc-windows-msvc`.
    1. We are using nightly so that we can benefit from latest features.
 3. Use rustfmt nightly: `cargo +nightly fmt`.
-
-### Vulkan SDK
-
-Optionnaly, install the Vulkan SDK if you plan on enabling Vulkan debug capabilities:
-
-1. Download and install Vulkan SDK from: <https://vulkan.lunarg.com/sdk/home#windows>
+4. Install LunarG Vulkan SDK: <https://www.lunarg.com/vulkan-sdk/>
 
 ## Development
 

@@ -520,6 +520,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "editor"
+version = "0.0.0"
+dependencies = [
+ "cgmath",
+ "core",
+ "engine",
+ "env_logger",
+ "log",
+ "winit",
+]
+
+[[package]]
 name = "either"
 version = "1.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"

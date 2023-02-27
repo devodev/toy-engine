@@ -16,6 +16,7 @@ debug = 0
 # local crates
 camera = { path = "./crates/camera", version = "0.0.0" }
 core = { path = "./crates/core", version = "0.0.0" }
+editor = { path = "./crates/editor", version = "0.0.0" }
 engine = { path = "./crates/engine", version = "0.0.0" }
 input = { path = "./crates/input", version = "0.0.0" }
 sandbox = { path = "./crates/sandbox", version = "0.0.0" }

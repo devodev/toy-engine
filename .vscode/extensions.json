@@ -6,7 +6,7 @@
     "recommendations": [
         "yzhang.markdown-all-in-one",
         "rust-lang.rust-analyzer",
-        "bungcip.better-toml",
+        "tamasfe.even-better-toml",
         "usernamehw.errorlens",
         "slevesque.shader",
         "EditorConfig.EditorConfig",

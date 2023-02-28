@@ -26,6 +26,3 @@ input.workspace = true
 vulkan-imgui.workspace = true
 vulkan-renderer.workspace = true
 vulkan-renderer-2d.workspace = true
-
-[build-dependencies]
-shaderc = "0.8.2"

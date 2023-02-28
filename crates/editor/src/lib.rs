@@ -5,6 +5,7 @@ use engine::engine::{Application, ApplicationContext};
 
 pub struct EditorApp {
     show_imgui_demo: bool,
+    show_imgui_demo_toggler: KeyToggler,
 }
 
 impl Application for EditorApp {
@@ -36,12 +37,43 @@ impl Application for EditorApp {
             imgui_ui.show_demo_window(&mut self.show_imgui_demo);
         }
     }
+
+    fn on_update(&mut self, ctx: ApplicationContext) {
+        self.show_imgui_demo_toggler.on_update(&ctx, || {
+            self.show_imgui_demo = !self.show_imgui_demo;
+        });
+    }
 }
 
 impl Default for EditorApp {
     fn default() -> Self {
         Self {
             show_imgui_demo: true,
+            show_imgui_demo_toggler: KeyToggler::new(winit::event::VirtualKeyCode::Slash),
+        }
+    }
+}
+
+struct KeyToggler {
+    key: winit::event::VirtualKeyCode,
+    pressed: bool,
+}
+
+impl KeyToggler {
+    fn new(key: winit::event::VirtualKeyCode) -> Self {
+        Self {
+            key,
+            pressed: false,
+        }
+    }
+
+    fn on_update(&mut self, ctx: &ApplicationContext, f: impl FnOnce()) {
+        if ctx.is_key_pressed(self.key) && !self.pressed {
+            self.pressed = true;
+            f();
+        }
+        if ctx.is_key_released(self.key) && self.pressed {
+            self.pressed = false;
         }
     }
 }

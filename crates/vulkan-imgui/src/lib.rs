@@ -334,7 +334,7 @@ impl Renderer {
         });
 
         // If the render area is <= 0, exit here and now.
-        if fb_width <= 0.0 || fb_height <= 0.0 {
+        if fb_width <= 0.0 || fb_height <= 0.0 || draw_data.draw_lists_count() == 0 {
             render_data.render = false;
             return Ok(render_data);
         } else {

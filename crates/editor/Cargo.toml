@@ -1,5 +1,5 @@
 [package]
-name = "engine"
+name = "editor"
 version = "0.0.0"
 description = "TBD"
 
@@ -8,22 +8,13 @@ edition.workspace = true
 license.workspace = true
 rust-version.workspace = true
 
-[lib]
-doctest = false
-
 [dependencies]
-ash.workspace = true
-ash-window.workspace = true
 cgmath.workspace = true
-image.workspace = true
+env_logger = "0.10.0"
 imgui.workspace = true
 log.workspace = true
 winit.workspace = true
 
 # local deps
-camera.workspace = true
 core.workspace = true
-input.workspace = true
-vulkan-imgui.workspace = true
-vulkan-renderer.workspace = true
-vulkan-renderer-2d.workspace = true
+engine.workspace = true

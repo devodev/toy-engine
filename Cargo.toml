@@ -16,6 +16,7 @@ debug = 0
 # local crates
 camera = { path = "./crates/camera", version = "0.0.0" }
 core = { path = "./crates/core", version = "0.0.0" }
+editor = { path = "./crates/editor", version = "0.0.0" }
 engine = { path = "./crates/engine", version = "0.0.0" }
 input = { path = "./crates/input", version = "0.0.0" }
 sandbox = { path = "./crates/sandbox", version = "0.0.0" }
@@ -27,5 +28,6 @@ ash = { version = "0.37.0", default-features = false, features = ["linked", "deb
 ash-window = "0.10.0"
 cgmath = "0.18.0"
 image = "0.24"
+imgui = "0.10.0"
 log = "0.4.17"
 winit = "0.27.2"

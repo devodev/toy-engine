@@ -7,7 +7,7 @@ use log::{debug, error};
 use vulkan_renderer::renderer::VulkanRenderer;
 use vulkan_renderer_2d::Renderer2DSystem;
 use winit::dpi::PhysicalSize;
-use winit::event::{Event, WindowEvent};
+use winit::event::{Event, VirtualKeyCode, WindowEvent};
 use winit::event_loop::{ControlFlow, EventLoop};
 use winit::window::WindowBuilder;
 
@@ -133,18 +133,24 @@ impl Engine {
         application.on_init(ApplicationContext::new(
             &mut objects,
             frame_counter.delta_time(),
+            &input,
         ));
 
         // run main loop
         event_loop.run(move |event, _, control_flow| {
             *control_flow = ControlFlow::Poll;
 
-            // update ImGui system
-            winit_platform.handle_event(imgui_context.io_mut(), &window, &event);
-            // update input system
-            input.on_event(&event);
-            // update camera system
-            camera_controller.on_event(&event);
+            // handle event
+            {
+                // update ImGui system
+                winit_platform.handle_event(imgui_context.io_mut(), &window, &event);
+                // update input system
+                input.on_event(&event);
+                // update camera system
+                camera_controller.on_event(&event);
+                // update application
+                application.on_event(&event);
+            }
 
             match event {
                 // handle close window
@@ -153,7 +159,9 @@ impl Engine {
                     ..
                 } => *control_flow = ControlFlow::Exit,
 
-                // Emitted when new events arrive from the OS to be processed.
+                // handle logic that must run early for every loop iteration
+                //
+                // NOTE: Emitted when new events arrive from the OS to be processed.
                 // This event type is useful as a place to put code that should be done before you
                 // start processing events.
                 Event::NewEvents(_) => {
@@ -177,25 +185,46 @@ impl Engine {
                     vulkan_renderer.destroy();
                 },
 
-                // NOTE: the MainEventsCleared event will be emitted when all input events
-                //       have been processed and redraw processing is about to begin.
+                // handle update/render
+                //
+                // NOTE: Emitted when all input events have been processed
+                // and redraw processing is about to begin.
                 Event::MainEventsCleared => {
                     let delta_time = frame_counter.delta_time();
 
-                    // print fps
-                    fps_printer.on_update(delta_time, frame_counter.fps());
+                    // update
+                    {
+                        // print fps
+                        fps_printer.on_update(delta_time, frame_counter.fps());
 
-                    // update application state
-                    application.on_update(ApplicationContext::new(&mut objects, delta_time));
+                        // update camera
+                        camera_controller.on_update(&input, delta_time);
 
-                    // update camera
-                    camera_controller.on_update(&input, delta_time);
+                        // update application state
+                        application.on_update(ApplicationContext::new(
+                            &mut objects,
+                            delta_time,
+                            &input,
+                        ));
+                    }
 
                     // render
                     unsafe {
                         if vulkan_renderer.begin_frame().expect("begin frame succeeds") {
+                            // ImGui Update
+                            winit_platform
+                                .prepare_frame(imgui_context.io_mut(), &window)
+                                .expect("prepare ImGui frame");
+                            let ui = imgui_context.new_frame();
+
+                            // update application state
+                            application.on_render_ui(ui);
+
+                            // ImGui prepare render
+                            winit_platform.prepare_render(ui, &window);
+
                             if let Err(e) = vulkan_renderer.draw(|_, command_buffer| {
-                                // Renderer 2D
+                                // Renderer2D Render
                                 renderer2d_system
                                     .render(
                                         vulkan_renderer.device(),
@@ -206,13 +235,7 @@ impl Engine {
                                     )
                                     .expect("renderer 2D render");
 
-                                // ImGui
-                                winit_platform
-                                    .prepare_frame(imgui_context.io_mut(), &window)
-                                    .expect("prepare ImGui frame");
-                                let ui = imgui_context.new_frame();
-                                ui.show_demo_window(&mut true);
-                                winit_platform.prepare_render(ui, &window);
+                                // Imgui Render
                                 imgui_renderer
                                     .render(
                                         vulkan_renderer.device(),
@@ -239,13 +262,19 @@ impl Engine {
 pub struct ApplicationContext<'a> {
     objects: &'a mut Vec<GameObject>,
     delta_time: time::Duration,
+    input: &'a InputSystem,
 }
 
 impl<'a> ApplicationContext<'a> {
-    fn new(objects: &'a mut Vec<GameObject>, delta_time: time::Duration) -> Self {
+    fn new(
+        objects: &'a mut Vec<GameObject>,
+        delta_time: time::Duration,
+        input: &'a InputSystem,
+    ) -> Self {
         Self {
             objects,
             delta_time,
+            input,
         }
     }
 
@@ -256,9 +285,27 @@ impl<'a> ApplicationContext<'a> {
     pub fn add_object(&mut self, object: GameObject) {
         self.objects.push(object);
     }
+
+    pub fn is_key_pressed(&self, key: VirtualKeyCode) -> bool {
+        self.input.is_key_pressed(key)
+    }
+
+    pub fn is_key_released(&self, key: VirtualKeyCode) -> bool {
+        self.input.is_key_released(key)
+    }
+
+    pub fn mouse_scoll_x(&self) -> f32 {
+        self.input.mouse_scoll_x()
+    }
+
+    pub fn mouse_scoll_y(&self) -> f32 {
+        self.input.mouse_scoll_y()
+    }
 }
 
 pub trait Application {
     fn on_init(&mut self, _ctx: ApplicationContext) {}
     fn on_update(&mut self, _ctx: ApplicationContext) {}
+    fn on_render_ui(&mut self, _imgui_ui: &mut imgui::Ui) {}
+    fn on_event(&mut self, _event: &Event<()>) {}
 }

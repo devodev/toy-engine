@@ -3,8 +3,9 @@ use core::object::GameObject;
 use cgmath::{Vector3, Vector4};
 use engine::engine::{Application, ApplicationContext};
 
-#[derive(Default)]
-pub struct EditorApp {}
+pub struct EditorApp {
+    show_imgui_demo: bool,
+}
 
 impl Application for EditorApp {
     fn on_init(&mut self, mut ctx: ApplicationContext) {
@@ -27,6 +28,20 @@ impl Application for EditorApp {
                         .with_color(color),
                 );
             }
+        }
+    }
+
+    fn on_render_ui(&mut self, imgui_ui: &mut imgui::Ui) {
+        if self.show_imgui_demo {
+            imgui_ui.show_demo_window(&mut self.show_imgui_demo);
+        }
+    }
+}
+
+impl Default for EditorApp {
+    fn default() -> Self {
+        Self {
+            show_imgui_demo: true,
         }
     }
 }

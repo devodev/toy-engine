@@ -11,6 +11,7 @@ rust-version.workspace = true
 [dependencies]
 cgmath.workspace = true
 env_logger = "0.10.0"
+imgui.workspace = true
 log.workspace = true
 winit.workspace = true
 

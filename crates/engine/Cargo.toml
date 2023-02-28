@@ -16,6 +16,7 @@ ash.workspace = true
 ash-window.workspace = true
 cgmath.workspace = true
 image.workspace = true
+imgui.workspace = true
 log.workspace = true
 winit.workspace = true
 

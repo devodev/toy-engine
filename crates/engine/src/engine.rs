@@ -185,13 +185,6 @@ impl Engine {
                     // print fps
                     fps_printer.on_update(delta_time, frame_counter.fps());
 
-                    // ImGui Update
-                    winit_platform
-                        .prepare_frame(imgui_context.io_mut(), &window)
-                        .expect("prepare ImGui frame");
-                    let ui = imgui_context.new_frame();
-                    ui.show_demo_window(&mut true);
-
                     // update application state
                     application.on_update(ApplicationContext::new(&mut objects, delta_time));
 
@@ -201,6 +194,15 @@ impl Engine {
                     // render
                     unsafe {
                         if vulkan_renderer.begin_frame().expect("begin frame succeeds") {
+                            // ImGui Update
+                            winit_platform
+                                .prepare_frame(imgui_context.io_mut(), &window)
+                                .expect("prepare ImGui frame");
+                            let ui = imgui_context.new_frame();
+
+                            // update application state
+                            application.on_render_ui(ui);
+
                             // ImGui prepare render
                             winit_platform.prepare_render(ui, &window);
 
@@ -265,4 +267,5 @@ impl<'a> ApplicationContext<'a> {
 pub trait Application {
     fn on_init(&mut self, _ctx: ApplicationContext) {}
     fn on_update(&mut self, _ctx: ApplicationContext) {}
+    fn on_render_ui(&mut self, _imgui_ui: &mut imgui::Ui) {}
 }

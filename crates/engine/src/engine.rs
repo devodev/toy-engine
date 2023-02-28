@@ -185,6 +185,13 @@ impl Engine {
                     // print fps
                     fps_printer.on_update(delta_time, frame_counter.fps());
 
+                    // ImGui Update
+                    winit_platform
+                        .prepare_frame(imgui_context.io_mut(), &window)
+                        .expect("prepare ImGui frame");
+                    let ui = imgui_context.new_frame();
+                    ui.show_demo_window(&mut true);
+
                     // update application state
                     application.on_update(ApplicationContext::new(&mut objects, delta_time));
 
@@ -194,8 +201,11 @@ impl Engine {
                     // render
                     unsafe {
                         if vulkan_renderer.begin_frame().expect("begin frame succeeds") {
+                            // ImGui prepare render
+                            winit_platform.prepare_render(ui, &window);
+
                             if let Err(e) = vulkan_renderer.draw(|_, command_buffer| {
-                                // Renderer 2D
+                                // Renderer2D Render
                                 renderer2d_system
                                     .render(
                                         vulkan_renderer.device(),
@@ -206,13 +216,7 @@ impl Engine {
                                     )
                                     .expect("renderer 2D render");
 
-                                // ImGui
-                                winit_platform
-                                    .prepare_frame(imgui_context.io_mut(), &window)
-                                    .expect("prepare ImGui frame");
-                                let ui = imgui_context.new_frame();
-                                ui.show_demo_window(&mut true);
-                                winit_platform.prepare_render(ui, &window);
+                                // Imgui Render
                                 imgui_renderer
                                     .render(
                                         vulkan_renderer.device(),
